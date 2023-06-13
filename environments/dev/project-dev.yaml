@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-dev
+  namespace: argocd
+  # Enable cascading deletes
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: App of apps for dev env
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
