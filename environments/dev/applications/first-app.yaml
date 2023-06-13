@@ -4,7 +4,7 @@ metadata:
   name: helm-example-chart
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: yreinhardt/traefik-example:~v0.1
+    argocd-image-updater.argoproj.io/image-list: yreinhardt/nginx-example:~v0.1
     argocd-image-updater.argoproj.io/write-back-method: git
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -19,7 +19,7 @@ spec:
         - name: "replicaCount"
           value: "2"
         - name: "image.repository"
-          value: yreinhardt/traefik-example
+          value: yreinhardt/nginx-example
         - name: "image.tag"
           value: v0.1.0
   destination:
