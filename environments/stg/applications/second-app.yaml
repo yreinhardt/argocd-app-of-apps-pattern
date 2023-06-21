@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: second-dummy
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: yreinhardt/nginx-example:~v0.1
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/gitbranch: main
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: project-stg
+  source:
+    repoURL: git@github.com:yreinhardt/helm-example-chart.git
+    targetRevision: main
+    path: helm-example-chart
+    helm:
+      parameters:
+        - name: "replicaCount"
+          value: "2"
+        - name: "image.repository"
+          value: yreinhardt/nginx-example
+        - name: "image.tag"
+          value: v0.1.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stg
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
