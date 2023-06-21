@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: helm-example-chart
+  name: helm-example-chart-stg
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: yreinhardt/nginx-example:~v0.1
